@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naughty Connections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .blur-image {
+            filter: blur(15px);
+            transition: filter 0.5s ease;
+        }
+        .blur-image:hover {
+            filter: blur(5px);
+        }
+        .modal {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Age Verification Modal -->
+    <div id="ageModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 modal">
+        <div class="bg-gray-800 p-8 rounded-xl max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <i data-feather="alert-triangle" class="w-12 h-12 text-red-500 mx-auto"></i>
+                <h2 class="text-2xl font-bold mt-4">Age 18+ Only</h2>
+                <p class="mt-2 text-gray-300">Please confirm you are 18 years or older to continue</p>
+            </div>
+            <div class="flex space-x-4">
+                <button id="exitBtn" class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-medium transition">
+                    Exit
+                </button>
+                <button id="confirmBtn" class="flex-1 bg-pink-600 hover:bg-pink-700 py-3 rounded-lg font-medium transition">
+                    I Am 18+
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Modal (hidden initially) -->
+    <div id="whatsappModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 modal hidden">
+        <div class="bg-gray-800 p-8 rounded-xl max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <i data-feather="message-square" class="w-12 h-12 text-green-500 mx-auto"></i>
+                <h2 class="text-2xl font-bold mt-4">Do you have WhatsApp?</h2>
+                <p class="mt-2 text-gray-300">Connect with local singles instantly</p>
+            </div>
+            <button id="whatsappBtn" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium transition">
+                Yes, Continue to Chat
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content (blurred until age verified) -->
+    <div id="mainContent" class="container mx-auto px-4 py-12 opacity-0 transition-opacity duration-300">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 text-pink-500">Naughty & Horny Reviews</h1>
+            
+            <div class="relative overflow-hidden rounded-xl mb-10">
+                <img src="http://static.photos/people/1200x630/69" 
+                     alt="Hot singles in your area" 
+                     class="w-full h-auto blur-image cursor-pointer">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center p-6 bg-black bg-opacity-50 rounded-lg">
+                        <i data-feather="lock" class="w-10 h-10 mx-auto text-pink-500"></i>
+                        <p class="mt-2 text-white">Verified members only</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-800 p-6 rounded-xl">
+                    <i data-feather="heart" class="w-8 h-8 text-pink-500"></i>
+                    <h3 class="text-xl font-bold mt-4">Local Singles</h3>
+                    <p class="mt-2 text-gray-400">Find horny singles in your area tonight</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl">
+                    <i data-feather="shield" class="w-8 h-8 text-pink-500"></i>
+                    <h3 class="text-xl font-bold mt-4">Discreet</h3>
+                    <p class="mt-2 text-gray-400">100% private and secure connections</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-xl">
+                    <i data-feather="zap" class="w-8 h-8 text-pink-500"></i>
+                    <h3 class="text-xl font-bold mt-4">Instant</h3>
+                    <p class="mt-2 text-gray-400">Get naughty right now - no waiting</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exit Page (hidden initially) -->
+    <div id="exitPage" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50 hidden">
+        <div class="text-center max-w-md mx-4">
+            <i data-feather="alert-octagon" class="w-16 h-16 text-red-500 mx-auto"></i>
+            <h2 class="text-3xl font-bold mt-6">Access Restricted</h2>
+            <p class="mt-4 text-gray-300">This website is only intended for users over the age of 18.</p>
+            <button onclick="window.close()" class="mt-8 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition">
+                Close Page
+            </button>
+        </div>
+    </div>
+
+    <script>
+        feather.replace();
+        
+        // Age verification logic
+        const ageModal = document.getElementById('ageModal');
+        const whatsappModal = document.getElementById('whatsappModal');
+        const mainContent = document.getElementById('mainContent');
+        const exitPage = document.getElementById('exitPage');
+        
+        document.getElementById('exitBtn').addEventListener('click', () => {
+            ageModal.classList.add('hidden');
+            exitPage.classList.remove('hidden');
+        });
+        
+        document.getElementById('confirmBtn').addEventListener('click', () => {
+            ageModal.classList.add('hidden');
+            whatsappModal.classList.remove('hidden');
+        });
+        
+        document.getElementById('whatsappBtn').addEventListener('click', () => {
+            whatsappModal.classList.add('hidden');
+            mainContent.style.opacity = '1';
+            window.location.href = "https://example.com";
+        });
+    </script>
+</body>
+</html>
